@@ -31,7 +31,7 @@ function sendMailCharla() {
   var enviados = 0;
 
   for (var i in contactos) {
-    var inscrito = contacto[i];
+    var contacto = contactos[i];
 
     var nombre = contacto[columnaNombre-1];
     var sendTo = contacto[columnaEmails-1];
