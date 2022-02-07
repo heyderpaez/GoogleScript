@@ -15,6 +15,8 @@ var codigoHTML = "mailGoogleScript";        // Ingrese el nombre del archivo htm
 
 var correoPrueba = "heyderpaez@gmail.com";  // Escriba un correo de su uso o acceso, para revisar los correos de prueba
 var remitente = "Correo Masivo";             // Coloque el nombre que desee aparezca como remitente, ejemplo, "Charlas Empresariales"
+var responderA = "dir_investigacion@pca.edu.co"   // Coloque la dirección donde desea se redirijan las respuestas de los receptores
+var enableRespuesta = false;              // Si desea enviarle como correo que no se puede responder (false) o si acepta respuesta (true)
 
 var asunto = "Correo de prueba";            // Ingrese el asunto para enviar en el correo
 
@@ -51,7 +53,7 @@ function sendMailCharla() {
    
       var subject = preAsunto + nombre + ", " + asunto;
         
-      GmailApp.sendEmail(sendTo, subject, message, {htmlBody : message, name : remitente});
+      GmailApp.sendEmail(sendTo, subject, message, {htmlBody : message, name : remitente, replyTo:responderA, noReply:enableRespuesta });
       enviados=enviados+1;
       if(depuracion==1){break;}
     }   
