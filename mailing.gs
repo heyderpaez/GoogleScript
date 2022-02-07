@@ -52,12 +52,18 @@ function sendMailCharla() {
       message = message.replace("%nombre", nombre);
    
       var subject = preAsunto + nombre + ", " + asunto;
-        
-      GmailApp.sendEmail(sendTo, subject, message, {htmlBody : message, name : remitente, replyTo:responderA, noReply:enableRespuesta });
+      
+      try {
+        GmailApp.sendEmail(sendTo, subject, message, {htmlBody : message, name : remitente, replyTo:responderA, noReply:enableRespuesta });
+      } catch (e) {
+        // Logs an ERROR message.
+        console.error('Se produjo el siguiente error al enviar el correo a '+ sentTo + ': ' + e);
+        {break;}
+      }    
       enviados=enviados+1;
       if(depuracion==1){break;}
-    }   
-  } //Comentarear para producción
+    }     
+  } 
   Logger.log("Enviados: " + enviados);
 }
 
