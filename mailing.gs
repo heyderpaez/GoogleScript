@@ -57,7 +57,7 @@ function sendMailCharla() {
         GmailApp.sendEmail(sendTo, subject, message, {htmlBody : message, name : remitente, replyTo:responderA, noReply:enableRespuesta });
       } catch (e) {
         // Logs an ERROR message.
-        console.error('Se produjo el siguiente error al enviar el correo a '+ sentTo + ': ' + e);
+        console.error('Se produjo el siguiente error al enviar el correo a '+ sendTo + ': ' + e);
         {break;}
       }    
       enviados=enviados+1;
