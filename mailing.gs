@@ -65,5 +65,6 @@ function sendMailCharla() {
     }     
   } 
   Logger.log("Enviados: " + enviados);
+  Logger.log("Último envío: " + sendTo);
 }
 
