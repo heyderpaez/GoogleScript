@@ -6,26 +6,32 @@
 
 var depuracion = 1;                         // 0 para enviar, 1 para enviar una muestra a correo personal
 
-var nombreHoja = "Respuestas de formulario 1"; // Entre las comillas, digite el nombre de la hoja donde están los datos, ejemplo "Hoja 1"
-var numFilas = 23;                          // Ingrese el número de la última fila en la que hay un contacto
-var numColumnas = 8;                        // Ingrese el número de columnas en la tabla de contactos
-var columnaEmails = 2;                      // Escriba el número de la columna donde se encuentran los correos de los contactos
-var columnaNombre = 3;                      // Escriba el número de la columna donde se encuentra el nombre del contacto
-var codigoHTML = "mailGoogleScript";        // Ingrese el nombre del archivo html que contiene el contenido del correo
+var nombreHoja = "myGoogleSheet"; // Entre las comillas, digite el nombre de la hoja donde están los datos, ejemplo "Hoja 1"
+const numFilas = 17731;                          // Ingrese el número de la última fila en la que hay un contacto
+const numColumnas = 31;                        // Ingrese el número de columnas en la tabla de contactos
+const columnaEmails = "E-mail";               // Escriba el nombre de la columna donde se encuentran los correos de los contactos
+const columnaNombre = "Primer Nombre";                      // Escriba el nombre de la columna donde se encuentra el nombre del contacto
+const codigoHTML = "myHTML";        // Ingrese el nombre del archivo html que contiene el contenido del correo
+
+  /** Hoja donde se encuentra la información de los estudiantes y rango de los datos*/ 
+const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(nombreHoja); 
+const dataRange = sheet.getRange(2, 1, numFilas, numColumnas);
+const rangeTitles = sheet.getRange(1, 1, 1, numColumnas);
+
+const colEmail = getColumnNr(columnaEmails);
+const colNombre = getColumnNr(columnaNombre);
+const colEstado = getColumnNr(columnaEstado);
 
 var correoPrueba = "heyderpaez@gmail.com";  // Escriba un correo de su uso o acceso, para revisar los correos de prueba
 var remitente = "Correo Masivo";             // Coloque el nombre que desee aparezca como remitente, ejemplo, "Charlas Empresariales"
 var responderA = "dir_investigacion@pca.edu.co"   // Coloque la dirección donde desea se redirijan las respuestas de los receptores
-var enableRespuesta = false;              // Si desea enviarle como correo que no se puede responder (false) o si acepta respuesta (true)
+const enableRespuesta = true;              // Si desea enviarle como correo que no se puede responder (true) o si acepta respuesta (false)
 
 var asunto = "Correo de prueba";            // Ingrese el asunto para enviar en el correo
 
 /** Plantilla del Mensaje - Plantilla HTML del correo masivo*/
 var bodyMail = HtmlService.createHtmlOutputFromFile(codigoHTML); 
 
-/** Hoja donde se encuentra la información de los estudiantes y rango de los datos*/ 
-var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(nombreHoja); 
-var dataRange = sheet.getRange(2, 1, numFilas, numColumnas);
 
 var contactos = dataRange.getValues();
 
@@ -66,5 +72,18 @@ function sendMailCharla() {
   } 
   Logger.log("Enviados: " + enviados);
   Logger.log("Último envío: " + sendTo);
+}
+
+function getColumnNr(name) {
+  var values = rangeTitles.getValues();
+  
+  for (var row in values) {
+    for (var col in values[row]) {
+      if (values[row][col] == name) {
+        return parseInt(col);
+      }
+    }
+  }
+  throw 'failed to get column by name';
 }
 
